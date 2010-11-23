@@ -4,7 +4,7 @@ module TimelineFu
       def initialize(event_type, opts = {})
         @event_type = event_type
         @opts = opts
-        @method = :"fire_#{@event_type}_after_#{@opts[:on]}"
+        @method = :"fire_#{@event_type}_#{@opts[:on]}"
       end
 
       def matches?(subject)
@@ -23,7 +23,7 @@ module TimelineFu
       end
 
       def setups_up_callback?
-        callback_chain_name = "after_#{@opts[:on]}_callback_chain"
+        callback_chain_name = "#{@opts[:on]}_callback_chain"
         callback_chain = @subject.send(callback_chain_name)
         if callback_chain.any? {|chain| chain.method == @method }
           true

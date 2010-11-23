@@ -16,7 +16,7 @@ module TimelineFu
 
         opts[:subject] = :self unless opts.has_key?(:subject)
 
-        method_name = :"fire_#{event_type}_after_#{opts[:on]}"
+        method_name = :"fire_#{event_type}_#{opts[:on]}"
         define_method(method_name) do
           create_options = [:actor, :subject, :secondary_subject, :message, :url].inject({}) do |memo, sym|
             case opts[sym]
@@ -32,7 +32,7 @@ module TimelineFu
           TimelineEvent.create!(create_options)
         end
 
-        send(:"after_#{opts[:on]}", method_name, :if => opts[:if])
+        send(:"#{opts[:on]}", method_name, :if => opts[:if])
       end
     end
   end
